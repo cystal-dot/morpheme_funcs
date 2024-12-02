@@ -1,0 +1,6 @@
+comment = 'morpheme_funcs:  Created by pgrx'
+default_version = '@CARGO_VERSION@'
+module_pathname = '$libdir/morpheme_funcs'
+relocatable = false
+superuser = true
+trusted = false

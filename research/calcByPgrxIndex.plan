@@ -1,0 +1,11 @@
+                                                         QUERY PLAN                                                         
+----------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=1189.75..1189.78 rows=10 width=205) (actual time=9268.515..9268.518 rows=10 loops=1)
+   ->  Sort  (cost=1189.75..1229.75 rows=16000 width=205) (actual time=9268.514..9268.515 rows=10 loops=1)
+         Sort Key: (calculate_morpheme_score(name, 'ドリル'::text)) DESC
+         Sort Method: top-N heapsort  Memory: 26kB
+         ->  Seq Scan on product  (cost=0.00..844.00 rows=16000 width=205) (actual time=0.898..9236.858 rows=16000 loops=1)
+ Planning Time: 0.308 ms
+ Execution Time: 9269.536 ms
+(7 rows)
+
