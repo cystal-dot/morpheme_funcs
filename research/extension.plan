@@ -1,0 +1,7 @@
+                                                  QUERY PLAN                                                   
+---------------------------------------------------------------------------------------------------------------
+ Seq Scan on product  (cost=0.00..844.00 rows=16000 width=201) (actual time=1.223..502.267 rows=16000 loops=1)
+ Planning Time: 0.227 ms
+ Execution Time: 503.833 ms
+(3 rows)
+
