@@ -23,6 +23,8 @@ pg_test = []
 [dependencies]
 pgrx = "=0.12.9"
 mecab = "=0.1.6"
+rayon = "=1.8"
+rustc-hash = "1.1.0"
 
 [dev-dependencies]
 pgrx-tests = "=0.12.9"
