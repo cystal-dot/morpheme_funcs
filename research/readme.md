@@ -1,32 +1,26 @@
 # Research Directory
 
-このディレクトリには、morpheme-funcs 拡張機能のパフォーマンス評価に関する実験データと分析結果が含まれています。
+このディレクトリでは、morpheme-funcs拡張機能の形態素ベースの類似度計算機能について、実装方法とパフォーマンスを比較検証しています。
 
-## ディレクトリ構成
+## 拡張機能の主な特徴
 
-### sql/
-形態素解析スコアの計算に関する実装の比較:
+### シンプルな類似度計算
+- `calculate_morpheme_score(text, text)`関数一つで形態素ベースの類似度が計算可能
+- 実装例: `SELECT calculate_morpheme_score('商品A', '商品B')`
 
-- `extension.sql`: 拡張機能を使用した実装
-- `pure_sql.sql`: 純SQLによる実装
+## パフォーマンス検証
 
-### plan/
-実行計画と性能評価の結果:
+### 検証内容
+- `extension.sql`: 拡張機能による直接的な類似度計算
+  - `calculate_morpheme_score`関数を使用した素直な実装
+- `pure_sql.sql`: SQLで同等の機能を実装した場合
+  - 形態素解析は他の拡張機能（例：`mecab_dict`）でも実現可能ですが、この検証では自作の`to_morpheme_array`関数を使用
 
-- `extension_plan.plan`: 拡張機能使用時の実行計画
-- `pure_sql_plan.plan`: 純SQL実装時の実行計画
-
-## 評価結果の概要
-
-### パフォーマンスの比較
-- 拡張機能を使用した実装は純SQLによる実装と比較して高速に動作
-
-### メモリ使用量
-- テーブルサイズの削減が可能
-  - 形態素解析結果をarray型で保持
-  - 中間テーブルが不要
-
-### より高速にするには
-- テーブル側に形態素の配列を保持してインデックスを付与することで、純SQLは `calc_morpheme_score`関数を使うよりも高速
-    - この場合はストレージ容量が必要であり、データ更新時にもインデックス更新などのコストが発生。クエリも複雑になる
-    - `pureQueryUsingMorColumns.sql` がその例
+### 高速化の検討
+形態素解析結果をテーブルに持たせることで、類似度計算の負荷を軽減できます：
+```sql
+-- 形態素配列カラムとGINインデックスを活用した例
+SELECT id, name, calculate_morpheme_score(name, '検索語') as score
+FROM products
+WHERE morphemes && to_morpheme_array('検索語')
+ORDER BY score DESC;

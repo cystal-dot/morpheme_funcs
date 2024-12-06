@@ -13,7 +13,12 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ../:/morpheme_funcs
+      # - ../:/morpheme_funcs
+      - ../.cargo:/morpheme_funcs/.cargo
+      - ../src:/morpheme_funcs/src
+      - ../Cargo.toml:/morpheme_funcs/Cargo.toml
+      - ../Cargo.lock:/morpheme_funcs/Cargo.lock
+      - ../morpheme_funcs.control:/morpheme_funcs/morpheme_funcs.control
       - ./init.sql:/docker-entrypoint-initdb.d/01_init.sql
       # ワイルドカードによる指定だとうまくいかないので、明示的に指定
       - ./sql/inserts/anzenyouhin.sql:/docker-entrypoint-initdb.d/02_anzenyouhin.sql
@@ -33,7 +38,11 @@ services:
       - ./sql/inserts/power_tools_product.sql:/docker-entrypoint-initdb.d/16_power_tools_product.sql
       - ./sql/inserts/seisoeisei.sql:/docker-entrypoint-initdb.d/17_seisoeisei.sql
       - ./init-morpheme.sh:/docker-entrypoint-initdb.d/18_init-morpheme.sh
+      # - ./init-morpheme.sh:/morpheme_funcs/init-morpheme.sh
       - postgres_data:/var/lib/postgresql/data
+    # cap_add:
+    #   - SYS_ADMIN
+    #   - SETUID
 
 # 永続化のためにボリュームを定義
 volumes:

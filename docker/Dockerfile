@@ -42,4 +42,8 @@ RUN cargo pgrx init
 RUN chmod 777 -R /usr/local/cargo \
     && chown -R postgres:postgres /var/lib/postgresql \
     && chown -R postgres:postgres /usr/lib/postgresql \
-    && chown -R postgres:postgres /usr/share/postgresql 
+    && chown -R postgres:postgres /usr/share/postgresql \
+    && chown -R postgres:postgres /usr/local/cargo 
+
+RUN mkdir -p /morpheme_funcs/target/debug && chown -R postgres:postgres /morpheme_funcs/target/debug
+RUN mkdir -p /morpheme_funcs/target/release && chown -R postgres:postgres /morpheme_funcs/target/release

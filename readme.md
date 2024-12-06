@@ -18,7 +18,7 @@ pgrxを使用してRustで実装されています。
 ## セットアップ
 
 ### Dockerを使用する場合
-
+(予め16000件の商品データをproductテーブルに用意しています`psql -d product`)
 1. Dockerコンテナを起動:
 ```bash
 cd docker
@@ -35,7 +35,6 @@ create extension morpheme_funcs;
 ```
 
 ## 使用例
-
 ```sql
 -- テキスト同士の類似度スコアを計算
 product=# SELECT calculate_similar_score('大ねじ小ねじ', 'ねじ');
@@ -45,12 +44,11 @@ product=# SELECT calculate_similar_score('大ねじ小ねじ', 'ねじ');
 
 
 -- テキストを形態素解析して配列に変換
-product=# select to_morpheme_array('形態素解析機能');
+product=# SELECT to_morpheme_array('形態素解析機能');
  to_morpheme_array  
 --------------------
  {形態素,機能,解析}
 ```
 
 ## パフォーマンス
-`calculate_similar_score` は、同等の機能を純SQLで実装した場合と比較して高速に動作します。  
-実行計画の詳細な比較や具体的なクエリ例については、researchディレクトリを参照してください。  
+`research`ディレクトリには、拡張機能のパフォーマンス評価に関する実験データと分析結果が含まれています。
