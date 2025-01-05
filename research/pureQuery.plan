@@ -1,24 +1,30 @@
-                                                        QUERY PLAN                                                         
----------------------------------------------------------------------------------------------------------------------------
- Seq Scan on product  (cost=0.00..20284.00 rows=16000 width=165) (actual time=0.696..3171.016 rows=16000 loops=1)
+DROP INDEX
+CREATE INDEX
+                                                              QUERY PLAN                                                               
+---------------------------------------------------------------------------------------------------------------------------------------
+ Result  (cost=17241.26..36921.26 rows=16000 width=165) (actual time=2568.526..4854.642 rows=16000 loops=1)
+   ->  Sort  (cost=17241.26..17281.26 rows=16000 width=69) (actual time=2568.430..2570.083 rows=16000 loops=1)
+         Sort Key: (((cardinality((SubPlan 2)))::double precision / (cardinality((SubPlan 3)))::double precision)) DESC
+         Sort Method: quicksort  Memory: 2666kB
+         ->  Seq Scan on product  (cost=0.00..16124.00 rows=16000 width=69) (actual time=1.349..2558.923 rows=16000 loops=1)
+               SubPlan 2
+                 ->  Function Scan on unnest unnest_1  (cost=0.01..0.26 rows=7 width=32) (actual time=0.108..0.109 rows=0 loops=16000)
+                       Filter: (unnest = ANY (to_morpheme_array('ドリル'::text)))
+                       Rows Removed by Filter: 10
+               SubPlan 3
+                 ->  HashAggregate  (cost=0.49..0.69 rows=20 width=32) (actual time=0.046..0.046 rows=11 loops=16000)
+                       Group Key: (unnest(to_morpheme_array(product.name)))
+                       Batches: 1  Memory Usage: 24kB
+                       ->  Append  (cost=0.00..0.44 rows=20 width=32) (actual time=0.032..0.042 rows=11 loops=16000)
+                             ->  ProjectSet  (cost=0.00..0.07 rows=10 width=32) (actual time=0.031..0.032 rows=10 loops=16000)
+                                   ->  Result  (cost=0.00..0.01 rows=1 width=0) (actual time=0.000..0.000 rows=1 loops=16000)
+                             ->  ProjectSet  (cost=0.00..0.07 rows=10 width=32) (actual time=0.009..0.009 rows=1 loops=16000)
+                                   ->  Result  (cost=0.00..0.01 rows=1 width=0) (actual time=0.000..0.000 rows=1 loops=16000)
    SubPlan 1
-     ->  Function Scan on unnest  (cost=0.01..0.26 rows=7 width=32) (actual time=0.063..0.064 rows=0 loops=16000)
+     ->  Function Scan on unnest  (cost=0.01..0.26 rows=7 width=32) (actual time=0.101..0.102 rows=0 loops=16000)
            Filter: (unnest = ANY (to_morpheme_array('ドリル'::text)))
            Rows Removed by Filter: 10
-   SubPlan 2
-     ->  Function Scan on unnest unnest_1  (cost=0.01..0.26 rows=7 width=32) (actual time=0.062..0.062 rows=0 loops=16000)
-           Filter: (unnest = ANY (to_morpheme_array('ドリル'::text)))
-           Rows Removed by Filter: 10
-   SubPlan 3
-     ->  HashAggregate  (cost=0.49..0.69 rows=20 width=32) (actual time=0.034..0.035 rows=11 loops=16000)
-           Group Key: (unnest(to_morpheme_array(product.name)))
-           Batches: 1  Memory Usage: 24kB
-           ->  Append  (cost=0.00..0.44 rows=20 width=32) (actual time=0.024..0.032 rows=11 loops=16000)
-                 ->  ProjectSet  (cost=0.00..0.07 rows=10 width=32) (actual time=0.024..0.025 rows=10 loops=16000)
-                       ->  Result  (cost=0.00..0.01 rows=1 width=0) (actual time=0.000..0.000 rows=1 loops=16000)
-                 ->  ProjectSet  (cost=0.00..0.07 rows=10 width=32) (actual time=0.005..0.005 rows=1 loops=16000)
-                       ->  Result  (cost=0.00..0.01 rows=1 width=0) (actual time=0.000..0.000 rows=1 loops=16000)
- Planning Time: 0.428 ms
- Execution Time: 3173.413 ms
-(20 rows)
+ Planning Time: 2.905 ms
+ Execution Time: 4859.084 ms
+(24 rows)
 

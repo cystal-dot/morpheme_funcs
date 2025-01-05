@@ -1,3 +1,5 @@
+DROP INDEX IF EXISTS idx_product_morpheme_array;
+CREATE INDEX idx_product_morpheme_array ON product USING gin(morpheme_array);
 EXPLAIN ANALYZE
 SELECT 
   name,
@@ -25,5 +27,5 @@ SELECT
       ) combined
     )
   ) as score
-FROM product
+FROM product ORDER BY score DESC
 ;

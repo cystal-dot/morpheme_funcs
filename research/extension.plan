@@ -1,7 +1,12 @@
-                                                  QUERY PLAN                                                   
----------------------------------------------------------------------------------------------------------------
- Seq Scan on product  (cost=0.00..844.00 rows=16000 width=201) (actual time=1.223..502.267 rows=16000 loops=1)
- Planning Time: 0.227 ms
- Execution Time: 503.833 ms
-(3 rows)
+DROP INDEX
+CREATE INDEX
+                                                     QUERY PLAN                                                      
+---------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=1961.26..2001.26 rows=16000 width=201) (actual time=519.067..520.449 rows=16000 loops=1)
+   Sort Key: (calculate_similar_score(name, 'ドリル'::text)) DESC
+   Sort Method: external merge  Disk: 3376kB
+   ->  Seq Scan on product  (cost=0.00..844.00 rows=16000 width=201) (actual time=0.448..497.145 rows=16000 loops=1)
+ Planning Time: 1.065 ms
+ Execution Time: 522.408 ms
+(6 rows)
 

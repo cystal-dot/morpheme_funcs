@@ -24,7 +24,7 @@ if [[ ! -f "$INIT_FILE_PATH" ]]; then
 fi
 
 # init.sql を最初に実行
-psql -d "$DB_NAME" -f "$INIT_FILE_PATH" -p 28813 --host /home/vscode/.pgrx/
+psql -d "$DB_NAME" -f "$INIT_FILE_PATH" -p "$PORT" --host "$HOST"
 echo "[INFO] init.sql を実行しました"
 
 # inserts ディレクトリ内の SQL ファイルを取得してソート
@@ -42,6 +42,6 @@ for SQL_FILE in $SQL_FILES; do
 done
 
 # update_morpehem_array.sql を実行
-psql -d "$DB_NAME" -f "$UPDATE_FILE_PATH" -p 28813 --host /home/vscode/.pgrx/
+psql -d "$DB_NAME" -f "$UPDATE_FILE_PATH" -p "$PORT" --host "$HOST"
 
 echo "[INFO] All scripts executed. Process completed."
