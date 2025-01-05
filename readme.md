@@ -20,7 +20,7 @@ cargo build
 ```
 
 ```
-cargo pgrx run pg14
+cargo pgrx run 
 create extension morpheme_funcs;
 ```
 
