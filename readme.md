@@ -8,30 +8,28 @@ pgrxを使用してRustで実装されています。
 - `calculate_similar_score(text, text)`: 2つの文字列の形態素解析による類似度スコアを計算します
 - `to_morpheme_array(text)`：文字列を形態素解析して配列に変換します
 
-## 必要要件
-
-- PostgreSQL 14以上
-- Rust
-- cargo-pgrx
-- Docker (開発環境用)
-
 ## セットアップ
+DevContainerで開く
 
-### Dockerを使用する場合
-(予め16000件の商品データをproductテーブルに用意しています`psql -d product`)
-1. Dockerコンテナを起動:
-```bash
-cd docker
-docker compose up -d
-docker compose exec -u postgres postgres bash
+下記コマンドでpgrxのinstallとbuild
+```
+sudo apt-get update && sudo apt-get install -y bison flex
+cargo install cargo-pgrx
+cargo pgrx init
+cargo build
 ```
 
-
-# テスト実行
-```bash
+```
 cargo pgrx run pg14
-drop extension if exists morpheme_funcs cascade;
 create extension morpheme_funcs;
+```
+
+### テスト用データをinsertする場合
+16000件の商品データをproductテーブルにinsertするためのスクリプトを用意しています  
+cargo pgrx run で起動するDBに対して実行するため、事前にDBを起動する必要があります
+```
+cd sql
+./apply_sqls.sh
 ```
 
 ## 使用例

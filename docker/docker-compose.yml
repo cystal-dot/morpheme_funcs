@@ -13,12 +13,6 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      # - ../:/morpheme_funcs
-      - ../.cargo:/morpheme_funcs/.cargo
-      - ../src:/morpheme_funcs/src
-      - ../Cargo.toml:/morpheme_funcs/Cargo.toml
-      - ../Cargo.lock:/morpheme_funcs/Cargo.lock
-      - ../morpheme_funcs.control:/morpheme_funcs/morpheme_funcs.control
       - ./init.sql:/docker-entrypoint-initdb.d/01_init.sql
       # ワイルドカードによる指定だとうまくいかないので、明示的に指定
       - ./sql/inserts/anzenyouhin.sql:/docker-entrypoint-initdb.d/02_anzenyouhin.sql

@@ -1,0 +1,1 @@
+UPDATE product SET morpheme_array = to_morpheme_array(name);

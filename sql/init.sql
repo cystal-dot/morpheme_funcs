@@ -1,5 +1,5 @@
 -- 商品テーブルを作成
--- init-morpehmeでカラムを追加している
+DROP TABLE IF EXISTS product;
 CREATE TABLE product (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
