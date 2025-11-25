@@ -26,7 +26,7 @@ create extension morpheme_funcs;
 
 ### テスト用データをinsertする場合
 16000件の商品データをproductテーブルにinsertするためのスクリプトを用意しています  
-cargo pgrx run でinsertするため、事前にDBを起動する必要があります
+cargo pgrx run でDBが起動します。DBを起こした後にスクリプトを動かしてください。
 ```
 cd sql
 ./apply_sqls.sh
